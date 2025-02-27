@@ -19,9 +19,14 @@ const salaryData = [
 
 employees.forEach(emp => {
     const salaryInfo = salaryData.find(s => s.gol === emp.gol);
+    
+    // Hitung tunjangan berdasarkan status
     const empAllowance = emp.status === "NIKAH" ? salaryInfo.allowance : 0;
+    
+    // Hitung total gaji
     const totalSalary = salaryInfo.baseSalary + empAllowance;
 
+    // Tampilkan informasi gaji karyawan
     console.log(`Nama: ${emp.name}`);
     console.log(`Golongan: ${emp.gol}`);
     console.log(`Status: ${emp.status}`);
