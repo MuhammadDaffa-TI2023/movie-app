@@ -2,7 +2,7 @@ const nama = "Muhammad Daffa";
 const jurusan = "Teknik Informatika";
 const tl = 2005;
 
-const greeting = `Hallo, nama saya ${nama} umur saya ${2025 - tl}`;
+const greeting = `Hallo, nama saya ${nama}, umur saya ${2025 - tl}`;
 
 const result = 90;
 
@@ -19,18 +19,16 @@ if (result >= 90) {
 // Fungsi deklarasi
 function umur(bod) {
     const year = 2025;
-    const age = year - bod;
-    return age;
+    return year - bod;
 }
 
 // Fungsi ekspresi
 const eksAge = function (bod1) {
     const year = 2025;
-    const age1 = year - bod1;
-    return age1;
+    return year - bod1;
 }
 
-// Arrow function
+// Arrow function (diperbaiki)
 const arrAge = (bod2) => 2025 - bod2;
 
 console.log(arrAge(2005)); // Output: 20
@@ -38,4 +36,4 @@ console.log(eksAge(2005)); // Output: 20
 console.log(umur(2005));   // Output: 20
 
 console.log(result);       // Output: 90
-console.log(greeting);     // Output: Hallo, nama saya Kheril Irli Januar umur saya 20
+console.log(greeting);     // Output: Hallo, nama saya Muhammad Daffa, umur saya 20
