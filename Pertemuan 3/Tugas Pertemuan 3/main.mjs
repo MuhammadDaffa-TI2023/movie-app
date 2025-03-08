@@ -2,14 +2,14 @@ import { index, store, destroy } from "./controller.mjs";
 
 const main = () => {
     // Tambahkan dua data baru
-    store({ nama: "Data 11", umur: 30, alamat: "Jl. Data 11", email: "data11@example.com" });
-    store({ nama: "Data 12", umur: 31, alamat: "Jl. Data 12", email: "data12@example.com" });
+    store({ nama: "Kiki Ramadhan", umur: 30, alamat: "Jl. Kenangan 11", email: "kiki.r@example.com" });
+    store({ nama: "Lina Maharani", umur: 31, alamat: "Jl. Harmoni 12", email: "lina.m@example.com" });
 
     // Tampilkan semua data
     index();
 
     // Hapus satu data
-    destroy("Data 5");
+    destroy("Eka Saputra");
 
     // Tampilkan data setelah penghapusan
     index();
