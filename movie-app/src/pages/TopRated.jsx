@@ -5,7 +5,7 @@ function TopRatedMovie() {
   return (
     <>
       {/* <Navbar /> */}
-      <h2>Top Rated</h2>
+      <h2>Top Rated Movie</h2>
       {/* <Footer /> */}
     </>
   );

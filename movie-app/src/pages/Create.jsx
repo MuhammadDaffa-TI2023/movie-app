@@ -4,7 +4,7 @@
 function CreateMovie() {
   return (
     <>
-      {/*<Navbar />*/}
+      {/* <Navbar /> */}
       <h2>Create Movie</h2>
       {/* <Footer /> */}
     </>
