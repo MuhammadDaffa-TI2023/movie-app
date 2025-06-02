@@ -1,17 +1,9 @@
-
-
+import React from "react";
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
+import theme from "../../../theme";
 
-// Ekspor komponen dari folder UI lainnya
-export { default as Heading } from "../Typography/Heading";
-export { default as Paragraph } from "../Typography/Paragraph";
-export { default as Form } from "../Form/Form";
-export { default as Label } from "../Form/Label";
-export { default as Input } from "../Form/Input";
-export { default as Image } from "../Media/Image";
-
-// Warna default jika tidak menggunakan theme
+// Warna default jika theme tidak tersedia
 const defaultColors = {
   primary: "#4361ee",
   secondary: "#b5179e",
@@ -27,9 +19,12 @@ const StyledButton = styled.button`
   color: #fff;
   cursor: pointer;
   margin: 2px;
+
+  /* Biar font di tengah tombol */
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
   transition: all 0.3s ease;
 
   background-color: ${({ theme, variant }) =>
@@ -59,12 +54,7 @@ StyledButton.defaultProps = {
 
 const Button = ({ size, variant, full, children, ...props }) => {
   return (
-    <StyledButton
-      size={size}
-      variant={variant}
-      full={full}
-      {...props}
-    >
+    <StyledButton size={size} variant={variant} full={full} {...props}>
       {children}
     </StyledButton>
   );

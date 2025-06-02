@@ -20,18 +20,19 @@ function Home() {
 
   return (
     <div>
-      <main>
-        <Hero />
+   <main>
+  <Hero />
 
-        {/* Tombol dengan ukuran medium (default) */}
-        <Button size="md" variant="primary">Lihat</Button>
+  <div style={{ display: "flex", justifyContent: "center", gap: "1rem", margin: "1rem 0" }}>
+  <Button size="md" variant="primary">Lihat</Button>
+  <Button size="md" variant="secondary">Liat</Button>  {/* tambahkan size="md" */}
+  </div>
 
-        {/* Atau cukup seperti ini karena md adalah default */}
-        <Button variant="secondary">Liat</Button>
 
-        <Movies movies={movies} setMovies={setMovies} />
-        <AddMovieForm movies={movies} setMovies={setMovies} />
-      </main>
+  <Movies movies={movies} setMovies={setMovies} />
+  <AddMovieForm movies={movies} setMovies={setMovies} />
+</main>
+
     </div>
   );
 }
