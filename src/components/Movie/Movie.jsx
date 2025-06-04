@@ -2,23 +2,23 @@
 import styled from "styled-components";
 
 const StyledMovie = styled.div`
-  margin-button: 1rem;
-  
-  img {
-  border-radius: 25px;
-  max-width: 100%;
-  height: auto;
   margin-bottom: 1rem;
+
+  img {
+    border-radius: 25px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
   }
 
   h3 {
-  color: #4361ee;
-  font-size: 1.95rem;
-  margin-bottom: 0.5rem;
+    color: #4361ee;
+    font-size: 1.95rem;
+    margin-bottom: 0.5rem;
   }
 
   p {
-  color: #64748b;
+    color: #64748b;
   }
 
   /* Medium Screen */
@@ -32,18 +32,23 @@ const StyledMovie = styled.div`
     padding: 1rem;
   }
 `;
+
 function Movie(props) {
   const { movie } = props;
+
+  const tmdbImage = `http://image.tmdb.org/t/p/w300/${movie.poster_path}`;
+  const year = movie.year || movie.release_date;
+
   return (
     <StyledMovie>
       <img
-
-        src={movie.poster}
+        src={movie.poster || tmdbImage}
         alt={movie.title}
       />
       <h3>{movie.title}</h3>
-      <p >{movie.year}</p>
+      <p>{year}</p>
     </StyledMovie>
   );
 }
+
 export default Movie;

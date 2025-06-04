@@ -1,77 +1,41 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import axios from "axios";
+import Button from "../UI/Button";
+import {
+  Container,
+  HeroSection,
+  HeroLeft,
+  HeroRight,
+  HeroTitle,
+  HeroGenre,
+  HeroDescription,
+  HeroImage,
+  HeroButton,
+  StyledHero,
+} from "./Hero.styled";
 
-const HeroContainer = styled.div`
-  margin: 1rem;
-
-  @media (min-width: 992px) {
-    max-width: 1200px;
-    margin: 3rem auto;
-  }
-`;
-
-const HeroSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-  @media (min-width: 992px) {
-    margin: 0 1rem;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-  }
-`;
-
-const HeroLeft = styled.div`
-  margin-bottom: 1rem;
-
-  @media (min-width: 992px) {
-    flex-basis: 40%;
-  }
-`;
-
-const HeroTitle = styled.h2`
-  color: #000000;
-  margin-bottom: 1rem;
-  font-size: 2.44rem;
-`;
-
-const HeroGenre = styled.h3`
-  color: #000000;
-  margin-bottom: 1rem;
-  font-size: 1.59rem;
-`;
-
-const HeroDescription = styled.p`
-  color: #010101;
-  margin-bottom: 1rem;
-`;
-
-const HeroButton = styled.button`
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 10px;
-  background-color: #4361ee;
-  color: #fff;
-  cursor: pointer;
-  &:hover {
-    background-color: #3a56d4;
-  }
-`;
-
-const HeroRight = styled.div`
-  @media (min-width: 992px) {
-    flex-basis: 60%;
-  }
-`;
-
-const HeroImage = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 25px;
-`;
+// Mapping ID genre ke nama
+const GENRE_MAP = {
+  28: "Action",
+  12: "Adventure",
+  16: "Animation",
+  35: "Comedy",
+  80: "Crime",
+  99: "Documentary",
+  18: "Drama",
+  10751: "Family",
+  14: "Fantasy",
+  36: "History",
+  27: "Horror",
+  10402: "Music",
+  9648: "Mystery",
+  10749: "Romance",
+  878: "Science Fiction",
+  10770: "TV Movie",
+  53: "Thriller",
+  10752: "War",
+  37: "Western",
+};
 
 function Hero() {
   const [movie, setMovie] = useState(null);
@@ -81,15 +45,23 @@ function Hero() {
   useEffect(() => {
     async function fetchMovie() {
       try {
-        const url = "https://www.omdbapi.com/?apikey=fcf50ae6&i=tt2975590";
-        const response = await fetch(url);
+        const API_KEY = import.meta.env.VITE_API_KEY;
+        const URL = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
+        const response = await axios.get(URL);
+        const firstMovie = response.data.results[0];
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch movie data');
-        }
+        console.log("Fetched movie:", firstMovie); // DEBUG LOG
 
-        const data = await response.json();
-        setMovie(data);
+        const genreNames = firstMovie.genre_ids
+          .map((id) => GENRE_MAP[id])
+          .filter(Boolean);
+
+        setMovie({
+          title: firstMovie.title,
+          genres: genreNames,
+          overview: firstMovie.overview,
+          backdrop_path: firstMovie.backdrop_path,
+        });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -98,41 +70,48 @@ function Hero() {
     }
 
     fetchMovie();
-
-    return () => {
-      // Cleanup
-    };
   }, []);
 
-  if (loading) {
-    return <HeroContainer>Loading...</HeroContainer>;
-  }
+  if (loading) return <Container>Loading...</Container>;
+  if (error) return <Container>Error: {error}</Container>;
+  if (!movie) return <Container>No movie data found</Container>;
 
-  if (error) {
-    return <HeroContainer>Error: {error}</HeroContainer>;
-  }
+  // DEBUG LOG
+  console.log("Movie state:", movie);
 
   return (
-    <HeroContainer>
-      <HeroSection>
-        <HeroLeft>
-          <HeroTitle>{movie?.Title || 'Spiderman'}</HeroTitle>
-          <HeroGenre>
-            Genre: {movie?.Genre || 'Thriller, Drama, Romance'}
-          </HeroGenre>
-          <HeroDescription>
-            {movie?.Plot || 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'}
-          </HeroDescription>
-          <HeroButton>Watch</HeroButton>
-        </HeroLeft>
-        <HeroRight>
-          <HeroImage
-            src={movie?.Poster || 'https://picsum.photos/536/354'}
-            alt={movie?.Title || 'Movie Poster'}
+    <Container>
+      <StyledHero>
+        <div className="hero__left">
+          <h2>{movie.title || "Untitled Movie"}</h2>
+          <h3>
+            {movie.genres?.length > 0
+              ? movie.genres.join(", ")
+              : "No genres available"}
+          </h3>
+          <p>{movie.overview || "No description available."}</p>
+          <Button>
+            <a
+              href={`https://www.youtube.com/results?search_query=${movie.title}+trailer`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch Trailer
+            </a>
+          </Button>
+        </div>
+        <div>
+          <img
+            src={
+              movie.backdrop_path
+                ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
+                : "https://via.placeholder.com/500x281?text=No+Image"
+            }
+            alt={movie.title || "Movie Poster"}
           />
-        </HeroRight>
-      </HeroSection>
-    </HeroContainer>
+        </div>
+      </StyledHero>
+    </Container>
   );
 }
 
