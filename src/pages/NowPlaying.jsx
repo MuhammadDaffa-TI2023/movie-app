@@ -3,6 +3,9 @@ import axios from "axios";
 import MovieCard from "../components/MovieCard";
 
 function NowPlaying() {
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
+
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,10 +13,7 @@ function NowPlaying() {
   useEffect(() => {
     async function fetchNowPlaying() {
       try {
-        const API_KEY = import.meta.env.VITE_API_KEY;
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
-        );
+        const response = await axios.get(URL);
         setMovies(response.data.results);
       } catch (err) {
         setError(err.message);
@@ -23,7 +23,7 @@ function NowPlaying() {
     }
 
     fetchNowPlaying();
-  }, []);
+  }, [URL]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

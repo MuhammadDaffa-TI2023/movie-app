@@ -1,4 +1,4 @@
-// import styles from "./Movie.module.css";
+import { Link } from "react-router-dom"; // ✅ Tambahkan Link
 import styled from "styled-components";
 
 const StyledMovie = styled.div`
@@ -45,7 +45,10 @@ function Movie(props) {
         src={movie.poster || tmdbImage}
         alt={movie.title}
       />
-      <h3>{movie.title}</h3>
+      {/* Tambahkan Link di sekitar judul */}
+      <Link to={`/movie/${movie.id}`}>
+        <h3>{movie.title}</h3>
+      </Link>
       <p>{year}</p>
     </StyledMovie>
   );

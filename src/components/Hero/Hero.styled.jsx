@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding: 2rem;
-  background-color: #1e293b;
-  color: #f8fafc;
+padding: 2rem;
+background: linear-gradient(135deg, #fcd34d, #fde68a, #bef264);
+
+color: #1e293b;
+border: 3px solid red; /* <- tambahkan ini untuk tes */
 `;
+
 
 export const HeroSection = styled.section`
   display: flex;
@@ -77,3 +80,4 @@ export const StyledHero = styled.div`
     object-fit: cover;
   }
 `;
+
